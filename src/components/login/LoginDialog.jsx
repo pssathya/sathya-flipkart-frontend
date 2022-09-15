@@ -126,7 +126,7 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
             if (response.status === 200) {
                 showError(false);
                 handleClose();
-                setAccount(response.data.data.firstname);
+                setAccount(response.data.userFirstName);
             } else {
                 showError(true);
             }
@@ -137,7 +137,7 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
         let response = await authenticateSignup(signup);
         if (!response) return;
         handleClose();
-        setAccount(signup.firstname);
+        setAccount(response.data.userFirstName);
     }
 
     const toggleSignup = () => {
