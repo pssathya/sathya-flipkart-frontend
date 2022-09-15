@@ -4,6 +4,7 @@ import { Box, styled } from '@mui/material';
 
 import NavBar from "./NavBar";
 import Banner  from "./Banner";
+import Slide from './Slide';
 
 import { useSelector, useDispatch } from 'react-redux'; // hooks
 import { getProducts as listProducts } from '../../redux/actions/productActions';
@@ -16,7 +17,7 @@ const Component = styled(Box)`
 const Home = ()=> {
 
     const getProducts = useSelector(state => state.getProducts);
-    const { products, error } = getProducts;
+    const { products } = getProducts;
 
     const dispatch = useDispatch();
 
@@ -29,6 +30,7 @@ const Home = ()=> {
             <NavBar/>
             <Component>
                 <Banner/>
+                <Slide products={products}/>
             </Component>
         </>
     )
