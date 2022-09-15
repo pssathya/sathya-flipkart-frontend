@@ -123,9 +123,13 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
         if (!response)
             showError(true);
         else {
-            showError(false);
-            handleClose();
-            setAccount(login.username);
+            if (response.status === 200) {
+                showError(false);
+                handleClose();
+                setAccount(response.data.data.firstname);
+            } else {
+                showError(true);
+            }
         }
     }
 
@@ -133,7 +137,7 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
         let response = await authenticateSignup(signup);
         if (!response) return;
         handleClose();
-        setAccount(signup.username);
+        setAccount(signup.firstname);
     }
 
     const toggleSignup = () => {
@@ -143,6 +147,7 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
     const handleClose = () => {
         setOpen(false);
         toggleAccount(accountInitialValues.login);
+        showError(false);
     }
 
     return (
