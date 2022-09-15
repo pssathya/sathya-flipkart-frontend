@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants/productConstant';
 import axios from 'axios';
 
-const URL = 'http://localhost:8000';
+const URL = 'https://sathya-flipkart-backend.herokuapp.com';
 export const getProducts = () => async (dispatch) => {
     try {
         const { data } = await axios.get(`${URL}/products`);
