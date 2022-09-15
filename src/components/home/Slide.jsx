@@ -1,10 +1,10 @@
 
 
-import { styled } from '@mui/material';
+import { Button, Divider, Box, Typography, styled } from '@mui/material';
 
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
-
+import Countdown from 'react-countdown';
 
 const responsive = {
     desktop: {
@@ -22,14 +22,78 @@ const responsive = {
 };
 
 
+const Component = styled(Box)`
+    margin-top: 10px;
+    background: #FFFFFF;
+`;
+
+const Deal = styled(Box)`
+    display: flex;    
+    padding: 15px 20px;
+`
+
+const DealText = styled(Typography)`
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 32px;
+    margin-right: 25px;
+`
+
+const Timer = styled(Box)`
+    color: #7f7f7f;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+`;
+
+const ViewAllButton = styled(Button)`
+    margin-left: auto;
+    background-color: #2874f0;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight:600
+`;
+
 const Image = styled('img')({
     width: 'auto',
     height: 150
 })
 
-const Slide = ({products}) => {
+const Text = styled(Typography)`
+    font-size: 14px;
+    margin-top: 5px
+`
+
+const RenderTimer = styled(Box)(({ theme }) => ({
+    [theme.breakpoints.down('sm')]: {
+        display: 'none'
+    }
+}));
+
+const Slide = ({ products, title, timer }) => {
+
+    const timerURL = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/timer_a73398.svg';
+
+    const renderer = ({ hours, minutes, seconds }) => {
+        return <RenderTimer variant="span">{hours} : {minutes} : {seconds}  Left</RenderTimer>;
+    };
+
     return (
-        <Carousel
+        <Component>
+            <Deal>
+                <DealText>{title}</DealText>
+                {
+                    timer &&
+                    <Timer>
+                        <img src={timerURL} style={{ width: 24 }} alt='time clock' />
+                        <Countdown date={Date.now() + 5.04e+7} renderer={renderer} />
+                    </Timer>
+                }
+
+                <ViewAllButton variant="contained" color="primary">View All</ViewAllButton>
+            </Deal>
+            <Divider />
+            <Carousel
                 swipeable={false}
                 draggable={false}
                 responsive={responsive}
@@ -39,17 +103,23 @@ const Slide = ({products}) => {
                 autoPlaySpeed={4000}
                 keyBoardControl={true}
                 showDots={false}
-                slidesToSlide={1}
                 containerClass="carousel-container"
                 dotListClass="custom-dot-list-style"
                 itemClass="carousel-item-padding-40-px"
             >
                 {
-                    products.map(product => (
-                        <Image src={product.url} alt="banner" />
+                    products.map(temp => (
+                        <Box textAlign="center" style={{ padding: '25px 15px' }}>
+                            <Image src={temp.url} />
+                            <Text style={{ fontWeight: 600, color: '#212121' }}>{temp.title.shortTitle}</Text>
+                            <Text style={{ color: 'green' }}>{temp.discount}</Text>
+                            <Text style={{ color: '#212121', opacity: '.6' }}>{temp.tagline}</Text>
+                        </Box>
                     ))
                 }
             </Carousel>
+        </Component>
+
     )
 }
 

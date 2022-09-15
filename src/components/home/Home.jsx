@@ -4,6 +4,7 @@ import { Box, styled } from '@mui/material';
 
 import NavBar from "./NavBar";
 import Banner  from "./Banner";
+import MidSlide from './MidSlide';
 import Slide from './Slide';
 
 import { useSelector, useDispatch } from 'react-redux'; // hooks
@@ -30,7 +31,54 @@ const Home = ()=> {
             <NavBar/>
             <Component>
                 <Banner/>
-                <Slide products={products}/>
+                <MidSlide
+                    products={products} 
+                    title='Deals of the Day'
+                    timer={true} 
+                    multi={true} 
+                />
+                <Slide
+                    products={products} 
+                    title='Discounts for You'
+                    timer={false} 
+                    multi={true} 
+                />
+                <Slide
+                    products={products} 
+                    title='Suggested Items'
+                    timer={false} 
+                    multi={true} 
+                />
+                <Slide
+                    products={products} 
+                    title='Top Selection'
+                    timer={false} 
+                    multi={true} 
+                />
+                <Slide
+                    products={products} 
+                    title='Recommended Items'
+                    timer={false} 
+                    multi={true} 
+                />
+                <Slide
+                    products={products} 
+                    title='Trending Offers'
+                    timer={false} 
+                    multi={true} 
+                />
+                <Slide
+                    products={products} 
+                    title="Season's top picks"
+                    timer={false} 
+                    multi={true} 
+                />
+                <Slide
+                    products={products} 
+                    title="Top Deals on Accessories"
+                    timer={false} 
+                    multi={true} 
+                />
             </Component>
         </>
     )
