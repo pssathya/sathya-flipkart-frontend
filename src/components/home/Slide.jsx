@@ -6,6 +6,7 @@ import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import Countdown from 'react-countdown';
 
+
 const responsive = {
     desktop: {
         breakpoint: { max: 3000, min: 1024 },
@@ -20,7 +21,6 @@ const responsive = {
         items: 1,
     }
 };
-
 
 const Component = styled(Box)`
     margin-top: 10px;
@@ -70,8 +70,7 @@ const RenderTimer = styled(Box)(({ theme }) => ({
     }
 }));
 
-const Slide = ({ products, title, timer }) => {
-
+const MultiSlide = ({ products, title, timer }) => {
     const timerURL = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/timer_a73398.svg';
 
     const renderer = ({ hours, minutes, seconds }) => {
@@ -89,7 +88,6 @@ const Slide = ({ products, title, timer }) => {
                         <Countdown date={Date.now() + 5.04e+7} renderer={renderer} />
                     </Timer>
                 }
-
                 <ViewAllButton variant="contained" color="primary">View All</ViewAllButton>
             </Deal>
             <Divider />
@@ -119,7 +117,16 @@ const Slide = ({ products, title, timer }) => {
                 }
             </Carousel>
         </Component>
+    )
+}
 
+const Slide = (props) => {
+    return (
+        <>
+            {
+                props.multi === true && <MultiSlide {...props} />
+            }
+        </>
     )
 }
 
