@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Dialog, DialogContent, TextField, Box, Button, Typography, styled } from '@mui/material';
 
@@ -61,7 +61,6 @@ const Error = styled(Typography)`
     margin-top: 10px;
     font-weight: 600;
 `
-// height: 70vh;
 
 const Image = styled(Box)`
     background: #2874f0 url(https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png) center 85% no-repeat;
@@ -73,6 +72,11 @@ const Image = styled(Box)`
         font-weight: 600
     }
 `;
+
+const loginInitialValues = {
+    username: '',
+    password: ''
+};
 
 const signupInitialValues = {
     firstname: '',
@@ -96,19 +100,40 @@ const accountInitialValues = {
     }
 }
 
-const LoginDialog = ({ open, setOpen }) => {
+const LoginDialog = ({ open, setOpen, setAccount }) => {
+    const [login, setLogin] = useState(loginInitialValues);
+    const [signup, setSignup] = useState(signupInitialValues);
+    const [error, showError] = useState(false);
+    const [account, toggleAccount] = useState(accountInitialValues.login);
 
-    const [ signup, setSignup ] = useState(signupInitialValues);
-    const [ account, toggleAccount ] = useState(accountInitialValues.login);
+    useEffect(() => {
+        showError(false);
+    }, [login])
+
+    const onValueChange = (e) => {
+        setLogin({ ...login, [e.target.name]: e.target.value });
+    }
 
     const onInputChange = (e) => {
         setSignup({ ...signup, [e.target.name]: e.target.value });
     }
 
-    const signupUser = async() => {
+    const loginUser = async () => {
+        let response = await authenticateLogin(login);
+        if (!response)
+            showError(true);
+        else {
+            showError(false);
+            handleClose();
+            setAccount(login.username);
+        }
+    }
+
+    const signupUser = async () => {
         let response = await authenticateSignup(signup);
-        if(!response) return;
+        if (!response) return;
         handleClose();
+        setAccount(signup.username);
     }
 
     const toggleSignup = () => {
@@ -131,24 +156,25 @@ const LoginDialog = ({ open, setOpen }) => {
                     {
                         account.view === 'login' ?
                             <Wrapper>
-                                <TextField variant="standard" name='username' label='Enter Email/Mobile number' />
-                                <TextField variant="standard" name='password' label='Enter Password' />
+                                <TextField variant="standard" onChange={(e) => onValueChange(e)} name='username' label='Enter Email/Mobile number' />
+                                {error && <Error>Please enter valid Email ID/Mobile number</Error>}
+                                <TextField variant="standard" onChange={(e) => onValueChange(e)} name='password' label='Enter Password' />
                                 <Text>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</Text>
-                                <LoginButton>Login</LoginButton>
+                                <LoginButton onClick={() => loginUser()} >Login</LoginButton>
                                 <Text style={{ textAlign: 'center' }}>OR</Text>
                                 <RequestOTP>Request OTP</RequestOTP>
                                 <CreateAccount onClick={() => toggleSignup()}>New to Flipkart? Create an account</CreateAccount>
                             </Wrapper>
                             :
                             <Wrapper>
-                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='firstname' label='Enter Firstname' />
-                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='lastname' label='Enter Lastname' />
-                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />
-                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='email' label='Enter Email' />
-                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
-                            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='phone' label='Enter Phone' />
-                            <LoginButton onClick={() => signupUser()} >Continue</LoginButton>
-                        </Wrapper>
+                                <TextField variant="standard" onChange={(e) => onInputChange(e)} name='firstname' label='Enter Firstname' />
+                                <TextField variant="standard" onChange={(e) => onInputChange(e)} name='lastname' label='Enter Lastname' />
+                                <TextField variant="standard" onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />
+                                <TextField variant="standard" onChange={(e) => onInputChange(e)} name='email' label='Enter Email' />
+                                <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
+                                <TextField variant="standard" onChange={(e) => onInputChange(e)} name='phone' label='Enter Phone' />
+                                <LoginButton onClick={() => signupUser()} >Continue</LoginButton>
+                            </Wrapper>
                     }
                 </Box>
             </Component>
