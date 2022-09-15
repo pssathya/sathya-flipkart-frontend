@@ -6,13 +6,13 @@ import './App.css';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import DetailView from './components/details/DetailView';
-import ContextProvider from './context/ContextProvider';
+import DataContext from './context/ContextProvider';
 import Cart from './components/cart/Cart';
 
 function App() {
   return (
     <div className="App">
-      <ContextProvider>
+      <DataContext>
         <BrowserRouter>
           <Header />
           <Box style={{marginTop: 54}}>
@@ -23,7 +23,7 @@ function App() {
             </Routes>
           </Box>
         </BrowserRouter>
-      </ContextProvider>
+      </DataContext>
     </div>
   );
 }
