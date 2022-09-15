@@ -1,4 +1,5 @@
 
+
 import { Typography, Box, styled } from '@mui/material'; 
 
 import { navData } from '../../constants/data';
@@ -26,6 +27,7 @@ const Text = styled(Typography)`
 
 const NavBar = () => {
     return (
+        <Box style={{background: '#fff'}}>
         <Component>
             {
                 navData.map(temp => (
@@ -36,6 +38,7 @@ const NavBar = () => {
                 ))
             }
         </Component>
+        </Box>
     )
 }
 
