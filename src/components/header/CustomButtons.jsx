@@ -5,6 +5,7 @@ import { ShoppingCart } from '@mui/icons-material';
 
 import { LoginContext } from '../../context/ContextProvider';
 
+import Profile from './Profile';
 import LoginDialog from '../login/LoginDialog';
 
 const Container = styled(Box)(({ theme }) => ({
@@ -55,7 +56,7 @@ const LoginButton = styled(Button)(({ theme }) => ({
 const CustomButtons = () => {
 
     const [open, setOpen] = useState(false);
-    const { setAccount } = useContext(LoginContext);
+    const { account, setAccount } = useContext(LoginContext);
 
     const openDialog = () => {
         setOpen(true);
@@ -63,7 +64,10 @@ const CustomButtons = () => {
 
     return (
         <Wrapper>
-            <LoginButton variant="contained" onClick={() => openDialog()}>Login</LoginButton>
+            {
+                account ? <Profile account={account} setAccount={setAccount} /> :
+                    <LoginButton variant="contained" onClick={() => openDialog()}>Login</LoginButton>
+            }
             <Typography style={{ marginTop: 3, width: 135 }}>Become a Seller</Typography>
             <Typography style={{ marginTop: 3 }}>More</Typography>
 
