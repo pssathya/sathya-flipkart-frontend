@@ -1,20 +1,27 @@
-import { Box } from '@mui/material';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Box } from '@mui/material'
 
 import './App.css';
 
 import Header from './components/header/Header';
 import Home from './components/home/Home';
-import DataContext from './context/ContextProvider';
+import DetailView from './components/details/DetailView';
+import ContextProvider from './context/ContextProvider';
 
 function App() {
   return (
     <div className="App">
-      <DataContext>
-        <Header />
-        <Box style={{ marginTop: 54 }}>
-          <Home />
-        </Box>
-      </DataContext>
+      <ContextProvider>
+        <BrowserRouter>
+          <Header />
+          <Box style={{marginTop: 54}}>
+            <Routes>
+              <Route path= '/' element={<Home />} />
+              <Route path= '/product/:id' element={<DetailView />} />
+            </Routes>
+          </Box>
+        </BrowserRouter>
+      </ContextProvider>
     </div>
   );
 }
