@@ -68,10 +68,11 @@ const Cart = () => {
     }
 
     const buyNow = async () => {
-        let response = await payUsingPaytm({ amount: 500, email: 'codeforinterview01@gmail.com'});
+        let response = await payUsingPaytm({ amount: 500, name: 'Sathya', phone: '9994643209', email: 'ps_sathya@yahoo.com'});
+
         var information = {
-            action: 'https://securegw-stage.paytm.in/order/process',
-            params: response    
+            action: response.paymentUrl,
+            params: response.params
         }
         post(information);
     }
