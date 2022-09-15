@@ -3,12 +3,13 @@ import React, { useState, useContext } from 'react';
 import { Box, Typography, Badge, Button, styled } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 
+import { Link } from 'react-router-dom';
 import { LoginContext } from '../../context/ContextProvider';
 
 import Profile from './Profile';
 import LoginDialog from '../login/LoginDialog';
 
-const Container = styled(Box)(({ theme }) => ({
+const Container = styled(Link)(({ theme }) => ({
     display: 'flex',
     [theme.breakpoints.down('sm')]: {
         display: 'block'
