@@ -1,10 +1,14 @@
 
 import { Dialog } from '@mui/material';
 
-const LoginDialog = ({ open }) => {
+const LoginDialog = ({ open, setOpen }) => {
  
+    const handleClose =()=>{
+        setOpen(false);
+    }
+
     return (
-        <Dialog open={open}>
+        <Dialog open={open} onClose={handleClose}>
             Hello
         </Dialog>
     )
