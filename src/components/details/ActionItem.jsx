@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import { Button, Box, styled } from '@mui/material';
 import { ShoppingCart as Cart, FlashOn as Flash } from '@mui/icons-material';
@@ -9,6 +9,8 @@ import { post } from '../../utils/paytm';
 
 import { addToCart } from '../../redux/actions/cartActions';
 import { useDispatch } from 'react-redux';
+import { LoginContext } from '../../context/ContextProvider';
+import LoginDialog from '../login/LoginDialog';
 
 const LeftContainer = styled(Box)(({ theme }) => ({
     minWidth: '40%',
@@ -34,18 +36,31 @@ const StyledButton = styled(Button)`
 const ActionItem = ({ product }) => {
     const navigate = useNavigate();
     const { id } = product;
-        
+
     const [quantity] = useState(1);
     const dispatch = useDispatch();
+    //let sessionData = sessionStorage.getItem('userInfo') ? sessionStorage.getItem('userInfo').split(',') : [];
+
+    const [open, setOpen] = useState(false);
+    const { setAccount } = useContext(LoginContext);
+
+    const openDialog = () => {
+        setOpen(true);
+    }
 
     const buyNow = async () => {
-        let response = await payUsingPaytm({ amount: 500, name: 'Sathya', phone: '9994643209', email: 'ps_sathya@yahoo.com'});
 
-        var information = {
-            action: response.paymentUrl,
-            params: response.params
+        if (sessionStorage.getItem('loginStatus') === 'LoggedOut') {
+            openDialog();
+        } else {
+            let response = await payUsingPaytm({ amount: 500, name: 'Sathya', phone: '9994643209', email: 'ps_sathya@yahoo.com' });
+
+            var information = {
+                action: response.paymentUrl,
+                params: response.params
+            }
+            post(information);
         }
-        post(information);
     }
 
     const addItemToCart = () => {
@@ -56,8 +71,9 @@ const ActionItem = ({ product }) => {
     return (
         <LeftContainer>
             <Image src={product.detailUrl} /><br />
-            <StyledButton onClick={() => addItemToCart()} style={{marginRight: 10, background: '#ff9f00'}} variant="contained"><Cart />Add to Cart</StyledButton>
-            <StyledButton onClick={() => buyNow()} style={{background: '#fb641b'}} variant="contained"><Flash /> Buy Now</StyledButton>
+            <StyledButton onClick={() => addItemToCart()} style={{ marginRight: 10, background: '#ff9f00' }} variant="contained"><Cart />Add to Cart</StyledButton>
+            <StyledButton onClick={() => buyNow()} style={{ background: '#fb641b' }} variant="contained"><Flash /> Buy Now</StyledButton>
+            <LoginDialog open={open} setOpen={setOpen} setAccount={setAccount} />
         </LeftContainer>
     )
 }
