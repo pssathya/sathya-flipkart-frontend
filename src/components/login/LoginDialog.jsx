@@ -18,6 +18,10 @@ const LoginButton = styled(Button)`
     color: #fff;
     height: 48px;
     border-radius: 2px;
+
+    &:hover {
+        background-color: #FC864D;
+     }
 `;
 
 const RequestOTP = styled(Button)`
