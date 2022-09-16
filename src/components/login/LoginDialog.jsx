@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Dialog, DialogContent, TextField, Box, Button, Typography, styled } from '@mui/material';
 
-import { authenticateLogin, authenticateSignup } from '../../service/api';
+import { authenticateLogin, authenticateSignup, authenticatedUserInfo } from '../../service/api';
 
 const Component = styled(DialogContent)`
     height: 70vh;
@@ -124,9 +124,21 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
             showError(true);
         else {
             if (response.status === 200) {
-                showError(false);
+                getUserInfo(response.data.token);
+            } else {
+                showError(true);
+            }
+        }
+    }
+
+    const getUserInfo = async (token) => {
+        let response = await authenticatedUserInfo(token);
+        if (!response)
+            showError(true);
+        else {
+            if (response.status === 200) {
                 handleClose();
-                setAccount(response.data.userFirstName);
+                setAccount(response.data.firstname);
             } else {
                 showError(true);
             }
@@ -136,8 +148,7 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
     const signupUser = async () => {
         let response = await authenticateSignup(signup);
         if (!response) return;
-        handleClose();
-        setAccount(response.data.userFirstName);
+        getUserInfo(response.data.token);
     }
 
     const toggleSignup = () => {

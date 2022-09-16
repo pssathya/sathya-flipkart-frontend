@@ -20,6 +20,19 @@ export const authenticateSignup = async (user) => {
     }
 }
 
+export const authenticatedUserInfo = async (token) => {
+    try {
+        return await axios.get(`${url}/api/auth/userInfo`, {
+            headers: {
+                'x-access-token': token
+            }
+        });
+    } catch (error) {
+        console.log('error while calling UserInfo API: ', error);
+        return error.response;
+    }
+}
+
 export const getProductById = async (id) => {
     try {
         return await axios.get(`${url}/product/${id}`);
@@ -29,7 +42,7 @@ export const getProductById = async (id) => {
     }
 }
 
-export  const payUsingPaytm = async (data) => {
+export const payUsingPaytm = async (data) => {
     try {
         let response = await axios.post(`${url}/payment`, data);
         return response.data;
