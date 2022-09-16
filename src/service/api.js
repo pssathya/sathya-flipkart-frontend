@@ -20,8 +20,9 @@ export const authenticateSignup = async (user) => {
     }
 }
 
-export const authenticatedUserInfo = async (token) => {
+export const authenticatedUserInfo = async () => {
     try {
+        let token = sessionStorage.getItem('ltk');
         return await axios.get(`${url}/api/auth/userInfo`, {
             headers: {
                 'x-access-token': token

@@ -124,21 +124,29 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
             showError(true);
         else {
             if (response.status === 200) {
-                getUserInfo(response.data.token);
+                if (response.data.auth === true) {
+                    sessionStorage.setItem('ltk', response.data.token);
+                    getUserInfo();
+                } else {
+                    showError(true);
+                }
             } else {
                 showError(true);
             }
         }
     }
 
-    const getUserInfo = async (token) => {
-        let response = await authenticatedUserInfo(token);
+    const getUserInfo = async () => {
+        let response = await authenticatedUserInfo();
         if (!response)
             showError(true);
         else {
             if (response.status === 200) {
                 handleClose();
                 setAccount(response.data.firstname);
+                let outputArray = [response.data.firstname, response.data.email, response.data.phone];
+                sessionStorage.setItem('userInfo', outputArray);
+                sessionStorage.setItem('loginStatus', 'LoggedIn');
             } else {
                 showError(true);
             }

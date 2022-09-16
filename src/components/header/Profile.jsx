@@ -25,6 +25,9 @@ const Profile = ({ account, setAccount }) => {
 
     const logout = () => {
         setAccount('');
+        sessionStorage.removeItem('ltk');
+        sessionStorage.removeItem('userInfo');
+        sessionStorage.setItem('loginStatus','LoggedOut');
     }
     
     return (
