@@ -150,7 +150,7 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
                 setAccount(response.data.firstname);
                 let outputArray = [response.data.firstname, response.data.email, response.data.phone];
                 sessionStorage.setItem('userInfo', outputArray);
-                sessionStorage.setItem('loginStatus', 'LoggedIn');
+                sessionStorage.setItem('loginStatus', 'LoggedIn');                
             } else {
                 showError(true);
             }

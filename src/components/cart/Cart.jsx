@@ -68,7 +68,17 @@ const Cart = () => {
     }
 
     const buyNow = async () => {
-        let response = await payUsingPaytm({ amount: 500, name: 'Sathya', phone: '9994643209', email: 'ps_sathya@yahoo.com' });
+        let sessionUserInfo = sessionStorage.getItem('userInfo')
+            ? sessionStorage.getItem('userInfo').split(',')
+            : [];
+
+        let name = sessionUserInfo ? sessionUserInfo[0] : '';
+        let email = sessionUserInfo ? sessionUserInfo[1] : '';
+        let phone = sessionUserInfo ? sessionUserInfo[2] : '';
+
+        let totalCost = sessionStorage.getItem('totalPrice') ? sessionStorage.getItem('totalPrice') : '';
+
+        let response = await payUsingPaytm({ amount: totalCost, name: name, phone: phone, email: email });
 
         var information = {
             action: response.paymentUrl,

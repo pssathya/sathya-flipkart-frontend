@@ -49,23 +49,35 @@ const ActionItem = ({ product }) => {
     }
 
     const buyNow = async () => {
+        if (sessionStorage.getItem('loginStatus') === 'LoggedIn') {
 
-        if (sessionStorage.getItem('loginStatus') === 'LoggedOut') {
-            openDialog();
-        } else {
-            let response = await payUsingPaytm({ amount: 500, name: 'Sathya', phone: '9994643209', email: 'ps_sathya@yahoo.com' });
+            let sessionUserInfo = sessionStorage.getItem('userInfo')
+                ? sessionStorage.getItem('userInfo').split(',')
+                : [];
+
+            let name = sessionUserInfo ? sessionUserInfo[0] : '';
+            let email = sessionUserInfo ? sessionUserInfo[1] : '';
+            let phone = sessionUserInfo ? sessionUserInfo[2] : '';
+
+            let response = await payUsingPaytm({ amount: product.price.cost, name: name, phone: phone, email: email });
 
             var information = {
                 action: response.paymentUrl,
                 params: response.params
             }
             post(information);
+        } else {
+            openDialog();
         }
     }
 
     const addItemToCart = () => {
-        dispatch(addToCart(id, quantity));
-        navigate('/cart');
+        if (sessionStorage.getItem('loginStatus') === 'LoggedIn') {
+            dispatch(addToCart(id, quantity));
+            navigate('/cart');
+        } else {
+            openDialog();
+        }
     }
 
     return (

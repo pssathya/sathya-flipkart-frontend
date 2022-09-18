@@ -45,22 +45,26 @@ const Discount = styled(Typography)`
 
 const TotalView = ({ cartItems }) => {
     const [price, setPrice] = useState(0);
-    const [discount, setDiscount] = useState(0)
+    const [discount, setDiscount] = useState(0);
+    const [totalCost, setTotalCost] = useState(0);
 
     useEffect(() => {
         const totalAmount = () => {
-            let price = 0, discount = 0;
+            let price = 0, discount = 0, totalCost = 0;
             console.log(cartItems);
             cartItems.forEach(item => {
-                price += item.price.mrp;
-                discount += (item.price.mrp - item.price.cost);
-            })
+                price += item.price.mrp
+                discount += (item.price.mrp - item.price.cost)
+            });
+            totalCost = price - discount + 40;
             setPrice(price);
             setDiscount(discount);
+            setTotalCost(totalCost);
+            sessionStorage.setItem('totalPrice', totalCost);
         };
         totalAmount();
     }, [cartItems]);
-    
+
     return (
         <Box>  {/* className={classes.component}> */}
             <Header>
@@ -77,7 +81,7 @@ const TotalView = ({ cartItems }) => {
                     <Price component="span">₹40</Price>
                 </Typography>
                 <TotalAmount>Total Amount
-                    <Price>₹{price - discount + 40}</Price>
+                    <Price>₹{totalCost}</Price>
                 </TotalAmount>
                 <Discount>You will save ₹{discount - 40} on this order</Discount>
             </Container>

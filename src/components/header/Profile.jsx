@@ -27,6 +27,7 @@ const Profile = ({ account, setAccount }) => {
         setAccount('');
         sessionStorage.removeItem('ltk');
         sessionStorage.removeItem('userInfo');
+        sessionStorage.removeItem('totalPrice');
         sessionStorage.setItem('loginStatus', 'LoggedOut');
     }
 
