@@ -14,7 +14,7 @@ const Logout = styled(Typography)`
 
 const Profile = ({ account, setAccount }) => {
     const [open, setOpen] = useState(false);
-    
+
     const handleClick = (event) => {
         setOpen(event.currentTarget);
     };
@@ -27,9 +27,9 @@ const Profile = ({ account, setAccount }) => {
         setAccount('');
         sessionStorage.removeItem('ltk');
         sessionStorage.removeItem('userInfo');
-        sessionStorage.setItem('loginStatus','LoggedOut');
+        sessionStorage.setItem('loginStatus', 'LoggedOut');
     }
-    
+
     return (
         <>
             <Box onClick={handleClick}><Typography style={{ marginTop: 2 }}>{account}</Typography></Box>
@@ -38,13 +38,13 @@ const Profile = ({ account, setAccount }) => {
                 open={Boolean(open)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={() => { handleClose(); logout();}}>
-                    <PowerSettingsNew fontSize='small' color='primary'/> 
+                <MenuItem onClick={() => { handleClose(); logout(); }}>
+                    <PowerSettingsNew fontSize='small' color='primary' />
                     <Logout>Logout</Logout>
                 </MenuItem>
             </Component>
         </>
-    )    
+    )
 }
 
 export default Profile;

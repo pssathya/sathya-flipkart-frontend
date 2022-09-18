@@ -56,9 +56,9 @@ const Cart = () => {
     const { id } = useParams();
 
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
-        if(cartItems && id !== cartItems.id)   
+        if (cartItems && id !== cartItems.id)
             dispatch(addToCart(id));
         console.log(cartItems);
     }, [dispatch, cartItems, id]);
@@ -68,7 +68,7 @@ const Cart = () => {
     }
 
     const buyNow = async () => {
-        let response = await payUsingPaytm({ amount: 500, name: 'Sathya', phone: '9994643209', email: 'ps_sathya@yahoo.com'});
+        let response = await payUsingPaytm({ amount: 500, name: 'Sathya', phone: '9994643209', email: 'ps_sathya@yahoo.com' });
 
         var information = {
             action: response.paymentUrl,
@@ -79,25 +79,25 @@ const Cart = () => {
 
     return (
         <>
-        { cartItems.length ? 
-            <Component container>
-                <LeftComponent item lg={9} md={9} sm={12} xs={12}>
-                    <Header>
-                        <Typography style={{fontWeight: 600, fontSize: 18}}>My Cart ({cartItems?.length})</Typography>
-                    </Header>
-                        {   cartItems.map(item => (
-                                <CartItem item={item} removeItemFromCart={removeItemFromCart}/>
-                            ))
+            {cartItems.length ?
+                <Component container>
+                    <LeftComponent item lg={9} md={9} sm={12} xs={12}>
+                        <Header>
+                            <Typography style={{ fontWeight: 600, fontSize: 18 }}>My Cart ({cartItems?.length})</Typography>
+                        </Header>
+                        {cartItems.map(item => (
+                            <CartItem item={item} removeItemFromCart={removeItemFromCart} />
+                        ))
                         }
-                    <BottomWrapper>
-                        <StyledButton onClick={() => buyNow()} variant="contained">Place Order</StyledButton>
-                    </BottomWrapper>
-                </LeftComponent>
-                <Grid item lg={3} md={3} sm={12} xs={12}>
-                    <TotalView cartItems={cartItems} />
-                </Grid>
-            </Component> : <EmptyCart />
-        }
+                        <BottomWrapper>
+                            <StyledButton onClick={() => buyNow()} variant="contained">Place Order</StyledButton>
+                        </BottomWrapper>
+                    </LeftComponent>
+                    <Grid item lg={3} md={3} sm={12} xs={12}>
+                        <TotalView cartItems={cartItems} />
+                    </Grid>
+                </Component> : <EmptyCart />
+            }
         </>
 
     )
