@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 import { Dialog, DialogContent, TextField, Box, Button, Typography, styled } from '@mui/material';
 
@@ -21,6 +22,18 @@ const LoginButton = styled(Button)`
 
     &:hover {
         background-color: #FC864D;
+     }
+`;
+
+const LoginWithGitHubButton = styled(Button)`
+    text-transform: none;
+    background: #191919;
+    color: #fff;
+    height: 48px;
+    border-radius: 2px;
+
+    &:hover {
+        background-color: #464646;
      }
 `;
 
@@ -140,6 +153,24 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
         }
     }
 
+    const gitHubLoginOnClick = () => {
+        window.open("https://sathya-github-login-oauth.herokuapp.com/api", "_blank");
+    };
+
+    // const gitHubLoginOnClick1 = async () => {
+    //     let response = await loginWithGitHub();
+    //     console.log('>>>Response', response);
+    //     if (!response)
+    //         showError(true);
+    //     else {
+    //         if (response.status === 200) {
+    //             redirectToGitHub(response.data.redirectUri);
+    //         } else {
+    //             showError(true);
+    //         }
+    //     }
+    // }
+
     const getUserInfo = async () => {
         let response = await authenticatedUserInfo();
         if (!response)
@@ -150,7 +181,7 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
                 setAccount(response.data.firstname);
                 let outputArray = [response.data.firstname, response.data.email, response.data.phone];
                 sessionStorage.setItem('userInfo', outputArray);
-                sessionStorage.setItem('loginStatus', 'LoggedIn');                
+                sessionStorage.setItem('loginStatus', 'LoggedIn');
             } else {
                 showError(true);
             }
@@ -191,6 +222,7 @@ const LoginDialog = ({ open, setOpen, setAccount }) => {
                                 <LoginButton onClick={() => loginUser()} >Login</LoginButton>
                                 <Text style={{ textAlign: 'center' }}>OR</Text>
                                 <RequestOTP>Request OTP</RequestOTP>
+                                <LoginWithGitHubButton onClick={() => gitHubLoginOnClick()} ><GitHubIcon />&nbsp;&nbsp;Login with GitHub</LoginWithGitHubButton>
                                 <CreateAccount onClick={() => toggleSignup()}>New to Flipkart? Create an account</CreateAccount>
                             </Wrapper>
                             :
