@@ -39,7 +39,6 @@ const ActionItem = ({ product }) => {
 
     const [quantity] = useState(1);
     const dispatch = useDispatch();
-    //let sessionData = sessionStorage.getItem('userInfo') ? sessionStorage.getItem('userInfo').split(',') : [];
 
     const [open, setOpen] = useState(false);
     const { setAccount } = useContext(LoginContext);

@@ -63,6 +63,16 @@ const CustomButtons = () => {
         setOpen(true);
     }
 
+    let sessionUserInfo = sessionStorage.getItem('userInfo')
+        ? sessionStorage.getItem('userInfo').split(',')
+        : [];
+
+    let name = sessionUserInfo ? sessionUserInfo[0] : '';
+
+    if (name) {
+        setAccount(name);
+    }
+
     return (
         <Wrapper>
             {
