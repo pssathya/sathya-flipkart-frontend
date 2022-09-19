@@ -249,7 +249,7 @@ const OtherInfo = () => {
                     house. Now buy Grocery products for as low as 1 Rupee only - our 1 Rupee Store presents new products
                     every
                     day for a nominal price of 1 Rupee only. Terms and conditions apply.</PInfo>
-
+                    <br />
             </Component>
         </>
     )
