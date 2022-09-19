@@ -7,7 +7,7 @@ import Banner  from "./Banner";
 import MidSlide from './MidSlide';
 import MidSection from './MidSection';
 import Slide from './Slide';
-
+import OtherInfo from './OtherInfo';
 import { useSelector, useDispatch } from 'react-redux'; // hooks
 import { getProducts as listProducts } from '../../redux/actions/productActions';
 
@@ -82,6 +82,7 @@ const Home = ()=> {
                     multi={true} 
                 />
             </Component>
+            <OtherInfo/>
         </>
     )
 }
